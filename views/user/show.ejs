@@ -1,0 +1,37 @@
+<div class="group">
+    <a class="grid-half offset-half fade" href="/">Logout</a>
+</div>
+
+<hr/>
+<div class="group">
+<a class="btn grid-half float-center fade" href="/learn/<%= user.id %>">Start Learning</a>
+</div>
+
+<% if (user.name) { %>
+<h2><%= user.name + " - " + user.email %></h2>
+<% } else { %>
+<h2>Add your name below - <%= user.email %></h2>
+<% } %>
+
+<% if (user.photoPath) { %>
+    <img src="<%= '..\/' + user.photoPath %>" alt="photo" />
+    <div><a class="btn fade" href="/user/<%= user.id %>/photo">Update Photo</a></div>
+<% } else { %>
+    <a class="btn fade" href="/user/<%= user.id %>/photo">Add your photo</a>
+<% } %>
+
+
+<form action="/user/update/<%= user.id %>" method="POST" id="profile-form" class="space-top">
+    
+    <div class="control-group">
+        <input type="text" value="<%= user.name || '' %>" class="form-control text-center" placeholder="Add your name" name="name">
+    </div>
+    
+    <input type="submit" class="btn" value="Update Profile"/>
+    <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+</form>
+<hr />
+
+<div class="group">
+    <a class="grid-half float-center fade" href="/userRequest">Leave Feedback</a>
+</div>

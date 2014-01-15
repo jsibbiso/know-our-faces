@@ -1,0 +1,17 @@
+<div class="group">
+    <a class="grid-half fade" href="/user/<%= userId %>">Profile</a><a class="grid-half fade" href="/">Logout</a>
+</div>
+
+<hr />
+
+<h2>Add your photo</h2>
+<form id="uploadForm"
+enctype="multipart/form-data"
+action="/upload/upload"
+method="post">
+<input type="hidden" name="userId" value="<%= userId %>" /> 
+<input type="file" id="userPhotoInput" name="userPhoto" />
+<input type="submit" class="btn fade" value="Upload"/>    
+</form>
+
+<hr />

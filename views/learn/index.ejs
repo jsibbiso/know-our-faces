@@ -1,0 +1,37 @@
+<div class="group">
+    <a class="grid-half fade" href="/user/<%= reviewerId %>">Profile</a><a class="grid-half fade" href="/">Logout</a>
+</div>
+
+<hr/>
+
+<% if (typeof done !== 'undefined' ) { %>
+
+  <h2>Well Done</h2>
+  <h4>You have finished all of your reviews for now. Come back tomorrow.</h3>
+
+<% } else { %>
+
+<h2 id="who_title">Who is this?</h2>
+
+<% if (user.photoPath) { %>
+    <img src="<%= '..\/' + user.photoPath %>" alt="photo" />
+<% } %>
+
+<div id="answer">
+    <h2 id="name"><%= user.name %></h2>
+    <div id="response" data-reviewer_id="<%= reviewerId %>" data-reviewed_id="<%= user.id %>">
+        <a id="wrong" class="btn" data-response="0" href="#">Wrong</a>
+        <a id="hard" class="btn" data-response="1" href="#">Hard</a>
+        <a id="easy" class="btn"  data-response="2" href="#">Easy</a>
+    </div>
+</div>
+
+<div>
+    <a id="show_answer" class="btn" href="#">Show Answer</a>
+</div>
+<% } %>
+<p></p>
+<hr />
+<div class="group">
+    <a class="grid-half float-center fade" href="/userRequest">Leave Feedback</a>
+</div>

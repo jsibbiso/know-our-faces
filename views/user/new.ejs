@@ -1,0 +1,13 @@
+<div class="group space-bottom"></div>
+<hr />
+<h2 class="text-center">Get Started</h2>
+
+<form action="/user/create" method="POST" id="login-form">
+    <div class="control-group">
+        <input type="text" class="form-control text-center" placeholder="email address" name="email" type="email" required>
+    </div>
+    
+    <input type="submit" class="submit btn fade" value="Begin"/>
+    <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+</form>
+<hr />
