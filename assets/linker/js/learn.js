@@ -18,6 +18,10 @@ $( document ).ready(function() {
         }); 
     });
     
+    //Photo screen
+    $("#uploadForm input:submit").click(function() {
+        $(".container").fadeOut(2000);
+    }); 
     
     //Login screens
     $("#login-form").submit(function(event) {
