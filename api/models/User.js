@@ -19,6 +19,9 @@ module.exports = {
     },
     photoPath: {
       type: 'string'
+    },
+    photoId: {
+      type: 'string'
     }
   }
 

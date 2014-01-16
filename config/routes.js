@@ -42,27 +42,6 @@ module.exports.routes = {
     '/learn/recordRecall':'LearnController.recordRecall',
     '/learn/:id':'LearnController.index',
     
-    
-    
-    'get /public/images/*': {
-        controller: 'FileController',
-        action: 'get'
-    }
-    
-    
-/*
-    'get /user/new': {
-    controller: 'UserController',
-    action: 'new',
-    view: 'user/new'
-},
-    'get /user/:id': {
-        controller: 'UserController',
-        action: 'show',
-        view: 'user/show'
-
-    }
-  */  
   /*
   // But what if you want your home page to display
   // a signup form located at `views/user/signup.ejs`?

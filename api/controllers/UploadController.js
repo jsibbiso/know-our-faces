@@ -1,7 +1,8 @@
 var sid = require('shortid');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
-var gm = require('gm');
+//var gm = require('gm');
+var cloudinary = require('cloudinary');
 //var io = require('socket.io');
  
 var UPLOAD_PATH = 'public/images';
@@ -30,9 +31,11 @@ return fileName.split('.').slice(-1);
 // Where you would do your processing, etc
 function processImage(id, name, path, cb) {
 console.log('Processing image');
-gm(path).resize(null,200).write(path, function(err) {
+/*
+    gm(path).resize(null,200).write(path, function(err) {
     if(err) console.log("Image resizing error... bummer");                                
-});
+    });
+*/
 cb(null, {
 'result': 'success',
 'id': id,
@@ -51,14 +54,32 @@ upload: function (req, res) {
     //Deleting current image if it exists
     User.findOne(userId).done(function(err,user) {
         if (err) console.log("Couldn't find user");
+        //Change the state of the user so we know we are waiting for the image to be uploaded
+        user.photoPath = 'uploading';
+        user.save(function(err) { if (err) {console.log(err); return res.json(err,500); }});  
+        if(user.photoId) {
+            cloudinary.uploader.destroy(user.photoId, function(result) { 
+                console.log(result) 
+                }, 
+                { invalidate: true }
+            );
+        }
+         if (err) {
+            console.log('err error after uploading image');
+          }
+    
+/*      //Delete disk files 
         if (user.photoPath) {
             fs.unlink(user.photoPath, function(err) { 
                 if(err) console.log("Couldn't delete: " + user.photoPath); 
             });
         }
+*/
     });
     
-var file = req.files.userPhoto,
+var file = req.files.userPhoto;
+
+    /*
 id = sid.generate(),
 fileName = id + "." + fileExtension(safeFilename(file.name)),
 dirPath = UPLOAD_PATH + '/' + new Date().toISOString().substr(0,10),
@@ -69,7 +90,24 @@ mkdirp.sync(dirPath, 0755);
 } catch (e) {
 console.log(e);
 }
- 
+*/
+    
+cloudinary.uploader.upload(file.path, function(result) { 
+        console.log(result);
+        User.update(userId, {id:userId, photoPath:result['url'], photoId:result['public_id']}, function userUpdated(err, updatedUser) {  
+         if (err) {
+            console.log('err error after uploading image');
+          }
+          if(!updatedUser) {
+            console.log('updated user error after uploading image');
+          }
+        });
+    },
+    { height: 200, crop: "scale" }
+);
+return res.redirect('/user/'+userId);
+    
+    /* //Upload to disk
 fs.readFile(file.path, function (err, data) {
 if (err) {
 res.json({'error': 'could not read file'});
@@ -87,10 +125,10 @@ res.json(err);
     // Link to users profile
     User.update(userId, {id:userId, photoPath:filePath}, function userUpdated(err, updatedUser) {  
      if (err) {
-        console.log('err error');
+        console.log('err error after uploading image');
       }
       if(!updatedUser) {
-        console.log('updated user error');
+        console.log('updated user error after uploading image');
       }
     });
     
@@ -102,6 +140,8 @@ res.json(err);
 })
 }
 });
+    
+    */
 },
     
     
