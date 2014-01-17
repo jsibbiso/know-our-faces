@@ -20,7 +20,6 @@ module.exports = {
   
     //TODO: Check the actual user (id) exists in the database
    index: function (req, res) {
-       console.log("index");
         var id = req.param('id');
         if (!id) return res.send("No id specified.", 500);
        
@@ -61,17 +60,13 @@ module.exports = {
   },
     
   recordRecall: function(req, res) {
-      console.log("recordRecall");
       var params = _.extend(req.query || {}, req.params || {}, req.body || {});
-      console.log(params);
       
       MemoryItem.findOne(
           {reviewerId:params["reviewerId"], 
            reviewedId:params["reviewedId"]})
         .done(function(err, mem) {
-            console.log(mem);
             if(mem) {
-                console.log("Update");
                 //Update
                 switch(params['recall']) {
                     case '0':
@@ -89,18 +84,15 @@ module.exports = {
                 
             } else {
                 
-                console.log("Create");
                 //Create new entry - As it's the first review, review again as soon as the rest of the due reviews have been completed
-                var nextReview = new Date(new Date().getTime() + (0.25 + params['recall'])*60000); 
+                var nextReview = new Date(new Date().getTime() + (0.25 + params['recall']*5)*60000); 
                 MemoryItem.create(
                     {reviewerId:params["reviewerId"], 
                     reviewedId:params["reviewedId"],
                     nextInterval:"1.0",
                     nextReviewDate:nextReview}, 
                         function itemCreated (err, item) {
-                            console.log("Done!");
                             console.log(err);
-                            console.log(item);
                             if (err) return res.json(err,500);
                             return res.json("Success",200);
                         });

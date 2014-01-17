@@ -12,6 +12,25 @@
  * http://sailsjs.org/#documentation
  */
 
+if(process.env.VCAP_SERVICES) {
+    var af_mysql = JSON.parse(process.env.VCAP_SERVICES)["mysql-5.1"][0]["credentials"];
+    var af_mysql_host = af_mysql["hostname"];
+    var af_mysql_database = af_mysql["name"];
+    var af_mysql_port = af_mysql["port"];
+    var af_mysql_user = af_mysql["user"];
+    var af_mysql_password = af_mysql["password"];
+}
+
+if(process.env.CLOUDY_NAME) {
+    var cloudinary = require('cloudinary');
+    
+    cloudinary.config({ 
+        cloud_name: process.env.CLOUDY_NAME, 
+        api_key: process.env.CLOUDY_API_KEY, 
+        api_secret: process.env.CLOUDY_API_SECRET
+      });
+}
+
 module.exports.adapters = {
 
   // If you leave the adapter config unspecified 
@@ -27,13 +46,13 @@ module.exports.adapters = {
   // MySQL is the world's most popular relational database.
   // Learn more: http://en.wikipedia.org/wiki/MySQL
   myLocalMySQLDatabase: {
-
     module: 'sails-mysql',
-    host: 'localhost',
-    user: 'user',
+    host: af_mysql_host || 'localhost',
+    user: af_mysql_user || 'user',
     // Psst.. You can put your password in config/local.js instead
     // so you don't inadvertently push it up if you're using version control
-    password: 'user', 
-    database: 'user'
+    password: af_mysql_password || 'db', 
+    database: af_mysql_database || 'db',
+    port: af_mysql_port || 3306
   }
 };
