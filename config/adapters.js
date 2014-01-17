@@ -42,13 +42,16 @@ module.exports.adapters = {
   disk: {
     module: 'sails-disk'
   },
+    
+  port: process.env.VCAP_APP_PORT || 1337,
+  environment: process.env.NODE_ENV || 'development',
 
   // MySQL is the world's most popular relational database.
   // Learn more: http://en.wikipedia.org/wiki/MySQL
   myLocalMySQLDatabase: {
     module: 'sails-mysql',
     host: af_mysql_host || 'localhost',
-    user: af_mysql_user || 'user',
+    user: af_mysql_user || 'db',
     // Psst.. You can put your password in config/local.js instead
     // so you don't inadvertently push it up if you're using version control
     password: af_mysql_password || 'db', 
