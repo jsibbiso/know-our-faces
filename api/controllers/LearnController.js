@@ -35,11 +35,24 @@ module.exports = {
          }
          else
          {
+            User.findOne({id:id}).done(function userFound(err,user) {
+             if (err) {
+                 console.log('user not found');
+                 return res.send("User not found " + id, 500);
+             }
+             
+             queryStr = "SELECT id FROM user where id not in (select reviewedid from memoryitem where memoryitem.reviewerId = " + id + ") and user.name != '' and user.photoPath is not null and id != " + id;
+             locationBasedStr = " and workLocationId in (SELECT location.id FROM `location` inner join user on user.learnLocationId = location.id or user.learnLocationId = location.parentId where user.id = " + id + ");";
+             if(user.learnLocationId) { 
+                 queryStr = queryStr + locationBasedStr;
+             } else {
+                 queryStr = queryStr + ';';
+             }
              //Look for new users to review
-             MemoryItem.query("SELECT id FROM user where id not in (select reviewedid from memoryitem where memoryitem.reviewerId = " + id + ") and user.name != '' and user.photoPath is not null;", function(err,items) {
+             MemoryItem.query(queryStr, function(err,items) {
                  
                if (err) {
-                    console.log('err error');
+                    console.log('special query error');
                 }
             
                if(items.length > 0) {
@@ -55,6 +68,7 @@ module.exports = {
                }
                
             });
+           });
          }
        });    
   },
@@ -85,7 +99,7 @@ module.exports = {
             } else {
                 
                 //Create new entry - As it's the first review, review again as soon as the rest of the due reviews have been completed
-                var nextReview = new Date(new Date().getTime() + (0.25 + params['recall']*5)*60000); 
+                var nextReview = new Date(new Date().getTime() + (0.25 + Math.pow(params['recall'],9)*5)*60000); 
                 MemoryItem.create(
                     {reviewerId:params["reviewerId"], 
                     reviewedId:params["reviewedId"],
