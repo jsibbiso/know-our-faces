@@ -19,6 +19,7 @@ var utility = require('../services/utility');
 
 module.exports = {
       'new': function (req, res) {
+        
         var parents = [];
         Location.find().sort('name').exec(function(err,locations) {
             parents.push({val: '', text: 'World'});
@@ -50,6 +51,25 @@ module.exports = {
                     res.redirect('/location/'+ location.id);
                 });
             }
+        });
+    },
+    
+    show: function (req, res) {
+        var id = req.param('id');
+        if (!id) return res.send("No id specified.", 500);
+        
+        Location.findOne({id:id}).done(function locationFound(err, location) {
+            if (err) return res.send(err,500);
+            console.log(location);
+            
+            var parents = [];
+            Location.find().sort('name').exec(function(err,locations) {
+                parents.push({val: '', text: 'World'});
+                for(l=0;l<locations.length;l++) {
+                    parents.push({val: locations[l]['id'], text: locations[l]['name']});
+                };
+                return res.view({parents: parents, location:location});
+            });
         });
     },
 

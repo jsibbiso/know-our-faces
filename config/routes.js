@@ -41,6 +41,7 @@ module.exports.routes = {
     '/user/:id':'UserController.show',
     '/learn/recordRecall':'LearnController.recordRecall',
     '/learn/:id':'LearnController.index',
+    '/location/:id':'LocationController.show',
     
   /*
   // But what if you want your home page to display
