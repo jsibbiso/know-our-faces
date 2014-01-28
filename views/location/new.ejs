@@ -1,0 +1,13 @@
+<div class="group space-bottom"></div>
+<hr />
+<h2 class="text-center">Add Location</h2>
+
+<form action="/location/create" method="POST" id="login-form">
+    <div class="control-group">
+        <input type="text" class="form-control text-center" placeholder="location" name="name" required>
+    </div>
+    
+    <input type="submit" class="submit btn fade" value="Add"/>
+    <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+</form>
+<hr />
