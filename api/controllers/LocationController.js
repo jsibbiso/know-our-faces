@@ -59,6 +59,7 @@ module.exports = {
         var params = _.extend(req.query || {}, req.params || {}, req.body || {});
         var id = params.id;
         if (!id) return res.send("No id specified.", 500);
+        params['name'] = utility.toTitleCase(params['name']);
         
         if(params['parentId'] == '') { params['parentId'] = null; }
         Location.update(id, params, function locationUpdated(err, updatedLocation) {
