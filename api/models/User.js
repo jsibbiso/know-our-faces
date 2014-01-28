@@ -22,7 +22,14 @@ module.exports = {
     },
     photoId: {
       type: 'string'
+    },
+    workLocationId: {
+        type: 'INT'
+    },
+    learnLocationId: {
+        type: 'INT'
     }
+      
   }
 
 };
