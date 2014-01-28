@@ -41,6 +41,8 @@ module.exports.routes = {
     '/user/:id':'UserController.show',
     '/learn/recordRecall':'LearnController.recordRecall',
     '/learn/:id':'LearnController.index',
+    '/location/create':'LocationController.create',
+    '/location/new':'LocationController.new',
     '/location/:id':'LocationController.show',
     
   /*

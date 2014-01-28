@@ -54,13 +54,30 @@ module.exports = {
         });
     },
     
+    update: function (req, res) {
+
+        var params = _.extend(req.query || {}, req.params || {}, req.body || {});
+        var id = params.id;
+        if (!id) return res.send("No id specified.", 500);
+        
+        if(params['parentId'] == '') { params['parentId'] = null; }
+        Location.update(id, params, function locationUpdated(err, updatedLocation) {
+            if (err) {
+                console.log('err error: ' + err);
+            }
+            if(!updatedLocation) {
+                console.log('updated location error');
+            }
+            res.redirect('/location/'+id);   
+        });
+    },
+    
     show: function (req, res) {
         var id = req.param('id');
         if (!id) return res.send("No id specified.", 500);
         
         Location.findOne({id:id}).done(function locationFound(err, location) {
             if (err) return res.send(err,500);
-            console.log(location);
             
             var parents = [];
             Location.find().sort('name').exec(function(err,locations) {

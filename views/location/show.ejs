@@ -2,7 +2,7 @@
 <hr />
 <h2 class="text-center">Update Location</h2>
 
-<form action="/location/create" method="POST" id="login-form">
+<form action="/location/update/<%= location.id %>" method="POST" id="login-form">
     <div class="control-group">
         <input type="text" class="form-control text-center" placeholder="location" name="name" value="<%= location.name %>" required>
         <label for="parentId">Located within</label>
@@ -19,7 +19,7 @@
         
     </div>
     
-<!--    <input type="submit" class="submit btn fade" value="Update"/>  -->
+    <input type="submit" class="submit btn fade" value="Update"/>
     <input type="hidden" name="_csrf" value="<%= _csrf %>" />
 </form>
 <hr />
