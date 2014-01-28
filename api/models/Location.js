@@ -18,7 +18,9 @@ module.exports = {
         required: true
         //Unique...
     },
-    parentId: 'INT'
+    parentId: {
+      type: 'INT'
+    }
     
   }
 

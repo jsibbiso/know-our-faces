@@ -19,8 +19,16 @@ var utility = require('../services/utility');
 
 module.exports = {
       'new': function (req, res) {
-        return res.view();
-    },  
+        var parents = [];
+        Location.find().sort('name').exec(function(err,locations) {
+            parents.push({val: '', text: 'World'});
+            for(l=0;l<locations.length;l++) {
+                parents.push({val: locations[l]['id'], text: locations[l]['name']});
+            };
+            return res.view({parents: parents});
+        });
+          
+    },
   
     create: function (req, res) {
         var params = _.extend(req.query || {}, req.params || {}, req.body || {});
@@ -36,6 +44,7 @@ module.exports = {
             }
             else
             {        
+                if(params['parentId'] == '') { params['parentId'] = null; }
                 Location.create(params, function locationCreated(err, location) {
                     if (err) return res.send(err,500);
                     res.redirect('/location/'+ location.id);
