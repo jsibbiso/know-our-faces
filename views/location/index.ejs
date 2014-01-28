@@ -1,0 +1,20 @@
+<div class="group">
+    <a class="grid-half offset-half fade" href="/location">Location</a>
+    <a class="grid-half offset-half fade" href="/">Home</a>
+</div>
+<hr />
+<h2 class="text-center">Locations</h2>
+<ul class="text-left">
+            <% for(var key in locations) { %>
+                <li><a href="/location/<%= locations[key]['detail'].id %>"> <%= locations[key]['detail'].name %></a></li>
+                <% if(locations[key]['leaves'].length > 0) { %>
+                    <ul>
+                    <% for(var key2 in locations[key]['leaves']) { %>
+                        <li><a href="/location/<%= locations[key]['leaves'][key2].id %>"><%= locations[key]['leaves'][key2].name %></a></li>
+                    <% } %>
+                    </ul>
+                <% } %>
+
+            <% } %>
+    </ul>
+<hr />

@@ -18,7 +18,32 @@
 var utility = require('../services/utility');
 
 module.exports = {
-      'new': function (req, res) {
+    index: function (req, res) {
+        
+        var locs = {}; // {detail : loc, leaves : [locs]} 
+        Location.find().sort('name').exec(function(err,locations) {
+            for(l=0;l<locations.length;l++) {
+                if(locations[l]['parentId']) {
+                    if(!(locations[l]['parentId'] in locs)) {
+                        //Create new branch
+                        locs[locations[l]['parentId']] = {'detail':null,'leaves':[]};
+                    }         
+                    //Add as leaf
+                    locs[locations[l]['parentId']]['leaves'].push(locations[l]);
+                } else if(locations[l]['id'] in locs) {
+                    //Add as detail to branch
+                    locs[locations[l]['id']]['detail'] = locations[l];
+                } else {
+                    //Add as branch
+                    locs[locations[l]['id']] = {'detail':locations[l],'leaves':[]};
+                }
+            };
+            console.log(locs);
+            return res.view({locations: locs});
+        });          
+    },  
+    
+    'new': function (req, res) {
         
         var parents = [];
         Location.find().sort('name').exec(function(err,locations) {
