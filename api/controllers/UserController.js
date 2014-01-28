@@ -27,9 +27,12 @@ var UserController = {
         req.session.sesUserId = id;
         
         User.find(id, function userFound(err, user) {
-            return res.view({
-                user:user[0]
-            })
+            utility.locationsList(function(locations) {
+                return res.view({
+                    user:user[0],
+                    locations:locations
+                })
+            });        
         });
     },
     
@@ -39,7 +42,8 @@ var UserController = {
         var id = params.id;
         if (!id) return res.send("No id specified.", 500);
         
-        console.log(params);
+        if(params['workLocationId'] == '') { params['workLocationId'] = null; }
+        if(params['learnLocationId'] == '') { params['learnLocationId'] = null; }
         User.update(id, params, function userUpdated(err, updatedUser) {
             if (err) {
                 console.log('err error: ' + err);

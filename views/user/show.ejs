@@ -33,10 +33,30 @@
         <input type="text" value="<%= user.name || '' %>" class="form-control text-center" placeholder="Add your name" name="name">
     </div>
     <div class="group">
-        <label class="text-left grid-third float-left">Work in</label><select class="grid-half float-right"></select>
+        <label class="text-left grid-third float-left">Work in</label>
+        <select name="workLocationId" class="grid-half float-right">
+            <% for(l=0;l<locations.length;l++) { %>
+                <option value=<%= locations[l]['val'] %> 
+                    <% if(String(user.workLocationId) == locations[l]['val']) { %>
+                    selected="true"
+                    <% } %> >
+                    <%= locations[l]['text'] %>
+                </option>
+            <% } %>
+        </select>
     </div>
     <div class="group">
-        <label class="text-left grid-half float-left">Learn people in</label><select class="grid-half float-right"></select>
+        <label class="text-left grid-half float-left">Learn people in</label>
+        <select name="learnLocationId" class="grid-half float-right">
+            <% for(l=0;l<locations.length;l++) { %>
+                <option value=<%= locations[l]['val'] %> 
+                    <% if(String(user.learnLocationId) == locations[l]['val']) { %>
+                    selected="true"
+                    <% } %> >
+                    <%= locations[l]['text'] %>
+                </option>
+            <% } %>
+        </select>
     </div>
         
     <input type="submit" class="btn" value="Update Profile"/>
