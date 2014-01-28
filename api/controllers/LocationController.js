@@ -38,22 +38,14 @@ module.exports = {
                     locs[locations[l]['id']] = {'detail':locations[l],'leaves':[]};
                 }
             };
-            console.log(locs);
             return res.view({locations: locs});
         });          
     },  
     
     'new': function (req, res) {
-        
-        var parents = [];
-        Location.find().sort('name').exec(function(err,locations) {
-            parents.push({val: '', text: 'World'});
-            for(l=0;l<locations.length;l++) {
-                parents.push({val: locations[l]['id'], text: locations[l]['name']});
-            };
-            return res.view({parents: parents});
+        utility.locationsList(function(locations) {
+            return res.view({parents: locations});
         });
-          
     },
   
     create: function (req, res) {
@@ -105,13 +97,8 @@ module.exports = {
         Location.findOne({id:id}).done(function locationFound(err, location) {
             if (err) return res.send(err,500);
             
-            var parents = [];
-            Location.find().sort('name').exec(function(err,locations) {
-                parents.push({val: '', text: 'World'});
-                for(l=0;l<locations.length;l++) {
-                    parents.push({val: locations[l]['id'], text: locations[l]['name']});
-                };
-                return res.view({parents: parents, location:location});
+            utility.locationsList(function(locations) {
+                return res.view({parents: locations, location:location});
             });
         });
     },
