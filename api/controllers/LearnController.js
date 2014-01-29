@@ -42,11 +42,11 @@ module.exports = {
              }
              
              queryStr = "SELECT id FROM user where id not in (select reviewedid from memoryitem where memoryitem.reviewerId = " + id + ") and user.name != '' and user.photoPath is not null and id != " + id;
-             locationBasedStr = " and workLocationId in (SELECT location.id FROM `location` inner join user on user.learnLocationId = location.id or user.learnLocationId = location.parentId where user.id = " + id + ");";
+             locationBasedStr = " and workLocationId in (SELECT location.id FROM `location` inner join user on user.learnLocationId = location.id or user.learnLocationId = location.parentId where user.id = " + id + ")";
              if(user.learnLocationId) { 
-                 queryStr = queryStr + locationBasedStr;
+                 queryStr = queryStr + locationBasedStr + ' LIMIT 1;';
              } else {
-                 queryStr = queryStr + ';';
+                 queryStr = queryStr + ' LIMIT 1;';
              }
              //Look for new users to review
              MemoryItem.query(queryStr, function(err,items) {
