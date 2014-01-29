@@ -1,11 +1,7 @@
-var fs = require('fs');
-var mkdirp = require('mkdirp');
 //var gm = require('gm');
 var cloudinary = require('cloudinary');
 //var io = require('socket.io');
  
-var UPLOAD_PATH = 'public/images';
-
 module.exports = {
 upload: function (req, res) {
 
