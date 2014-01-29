@@ -8,9 +8,9 @@
 </div>
 
 <% if (user.name) { %>
-<h2><%= user.name + " - " + user.email %></h2>
+<h4><%= user.email %></h4>
 <% } else { %>
-<h2>Add your name below - <%= user.email %></h2>
+<h4>Add your name below - <%= user.email %></h4>
 <% } %>
 
 <% if (user.photoPath) { %>

@@ -16,8 +16,8 @@ upload: function (req, res) {
         User.findOne(userId).done(function(err,user) {
             if (err) console.log("Couldn't find user");
             photoId = user.photoId;
+            callback();
         });
-        callback();
       },
       
       function(callback) {
@@ -25,7 +25,6 @@ upload: function (req, res) {
         //Upload new image  
         var file = req.files.userPhoto;
         cloudinary.uploader.upload(file.path, function(result) { 
-            console.log(result);
             User.update(userId, {id:userId, photoPath:result['url'], photoId:result['public_id'], photoRotation:0}, function userUpdated(err, updatedUser) {  
                 if (err) {
                     console.log('err error after uploading image');
@@ -36,14 +35,13 @@ upload: function (req, res) {
                 callback();
             });
             },
-            { height: 200, crop: "scale", tags: process.env.NODE_ENV || 'development' }
+            { height: 200, crop: "scale", quality: 80, tags: process.env.NODE_ENV || 'development' }
         );
         
         //Remove old image from cloud
         if(photoId) {
             cloudinary.uploader.destroy(photoId, function(result) { 
-                console.log(result) 
-                }, 
+            }, 
                 { invalidate: true }
             );
         }
