@@ -19,7 +19,7 @@ module.exports = {
         //Unique...
     },
     parentId: {
-      type: 'INT'
+      type: 'INTERGER'
     }
     
   }

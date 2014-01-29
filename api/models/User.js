@@ -31,7 +31,7 @@ module.exports = {
         type: 'INTEGER'
     },
     learnLocationId: {
-        type: 'int'
+        type: 'INTEGER'
     },
     rotatedPhotoPath: function() {
         if(Number(this.photoRotation) > 0) {
