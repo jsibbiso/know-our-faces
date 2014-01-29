@@ -14,9 +14,9 @@ module.exports = {
   	nickname: 'string'
   	*/
     
-    reviewerId	: 'INT',
+    reviewerId	: 'INTEGER',
 
-    reviewedId	: 'INT',
+    reviewedId	: 'INTEGER',
 
     //Interval is in days  
     nextInterval	: 'FLOAT',
