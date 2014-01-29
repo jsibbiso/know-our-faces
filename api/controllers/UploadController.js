@@ -36,7 +36,7 @@ upload: function (req, res) {
                 callback();
             });
             },
-            { height: 200, crop: "scale" }
+            { height: 200, crop: "scale", tags: process.env.NODE_ENV || 'development' }
         );
         
         //Remove old image from cloud
