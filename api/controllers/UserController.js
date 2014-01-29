@@ -42,6 +42,7 @@ var UserController = {
         var id = params.id;
         if (!id) return res.send("No id specified.", 500);
         
+        if(params['name']) { params['name'] = utility.toTitleCase(params['name']); }
         if(params['workLocationId'] == '') { params['workLocationId'] = null; }
         if(params['learnLocationId'] == '') { params['learnLocationId'] = null; }
         User.update(id, params, function userUpdated(err, updatedUser) {
