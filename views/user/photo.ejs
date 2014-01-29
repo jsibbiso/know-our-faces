@@ -10,14 +10,14 @@
     <img src="<%= user.rotatedPhotoPath() %>" />
 </div>
 <div class="group">
-    <div class="grid-third float-left">
+    <div class="grid-half float-left">
         <form id="rotateLeftForm" action="/user/<%= user.id %>/rotatePhoto" method="post">
             <input type="hidden" name="userId" value="<%= user.id %>" />
             <input type="hidden" name="direction" value="left" />
             <input type="submit" class="btn" value="Rotate Left"/>    
         </form>
     </div>
-    <div class="grid-third float-right">
+    <div class="grid-half float-right">
         <form id="rotateLeftForm" action="/user/<%= user.id %>/rotatePhoto" method="post">
             <input type="hidden" name="userId" value="<%= user.id %>" />
             <input type="hidden" name="direction" value="right" />

@@ -14,7 +14,7 @@
 <% } %>
 
 <% if (user.photoPath) { %>
-    <img src="<%= user.rotatedPhotoPath() %>" />
+    <a class="fade" href="/user/<%= user.id %>/photo"><img src="<%= user.rotatedPhotoPath() %>" /></a>
     <div><a class="btn fade" href="/user/<%= user.id %>/photo">Update Photo</a></div>    
 <% } else { %>
     <a class="btn fade" href="/user/<%= user.id %>/photo">Add your photo</a>
