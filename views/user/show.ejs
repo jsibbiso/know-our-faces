@@ -14,14 +14,8 @@
 <% } %>
 
 <% if (user.photoPath) { %>
-
-  <% if (user.photoPath == 'uploading') { %>
-    <div><p>Your photo is being uploaded...</p>
-  <% } else { %>        
-    <img src="<%= user.photoPath %>" />
-  <% } %>
-  
-<div><a class="btn fade" href="/user/<%= user.id %>/photo">Update Photo</a></div>    
+    <img src="<%= user.rotatedPhotoPath() %>" />
+    <div><a class="btn fade" href="/user/<%= user.id %>/photo">Update Photo</a></div>    
 <% } else { %>
     <a class="btn fade" href="/user/<%= user.id %>/photo">Add your photo</a>
 <% } %>

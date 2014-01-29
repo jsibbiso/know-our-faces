@@ -78,15 +78,35 @@ var UserController = {
     },
         
     photo: function (req, res) {
-        console.log('PHOTO FUNCTION');
         var id = req.param('id');
         if (!id) return res.send("No id specified.", 500);
-        console.log(id);
 
-        return res.view({
-            userId:id
-        })
+        User.findOne({id:id}, function userFound(err, user) {
+            if (err) return res.send(err,500);
+            return res.view({
+                user:user
+            });
+        });
+    },
+    
+    rotatePhoto: function(req,res) {
+        var params = _.extend(req.query || {}, req.params || {}, req.body || {});
+        var id = req.param('id');
+        if (!id) return res.send("No id specified.", 500);
+
+        User.findOne({id:id}).done(function userFound(err, user) {
+            if (err) return res.send(err,500);
+            
+            user.rotatePhoto(params['direction']);
+            user.save(function(err) {
+                if (err) { console.log(err); return res.send(err,500); }
+                
+                return res.redirect('/user/'+id+'/photo');
+            });
+            
+        });
     }
+    
 }
 
 module.exports = UserController;

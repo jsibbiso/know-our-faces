@@ -36,6 +36,7 @@ module.exports.routes = {
     view: 'user/new'
   },
     '/user/:id/photo':'UserController.photo',
+    '/user/:id/rotatePhoto':'UserController.rotatePhoto',
     '/user/create':'UserController.create',
     '/user/new':'UserController.new',
     '/user/:id':'UserController.show',

@@ -30,7 +30,7 @@ upload: function (req, res) {
         var file = req.files.userPhoto;
         cloudinary.uploader.upload(file.path, function(result) { 
             console.log(result);
-            User.update(userId, {id:userId, photoPath:result['url'], photoId:result['public_id']}, function userUpdated(err, updatedUser) {  
+            User.update(userId, {id:userId, photoPath:result['url'], photoId:result['public_id'], photoRotation:0}, function userUpdated(err, updatedUser) {  
                 if (err) {
                     console.log('err error after uploading image');
                 }

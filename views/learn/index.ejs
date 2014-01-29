@@ -14,7 +14,7 @@
 <h2 id="who_title">Who is this?</h2>
 
 <% if (user.photoPath) { %>
-    <img src="<%= user.photoPath %>" />
+    <img src="<%= user.rotatedPhotoPath() %>" />
 <% } %>
 
 <div id="answer">
