@@ -62,7 +62,12 @@ module.exports = {
             }
             else
             {        
-                if(params['parentId'] == '') { params['parentId'] = null; }
+                if(params['parentId'] == '') { 
+                    params['parentId'] = null; 
+                } else {
+                    params['parentId'] = Number(params['parentId']); 
+                }
+                console.log(params);
                 Location.create(params, function locationCreated(err, location) {
                     if (err) return res.send(err,500);
                     res.redirect('/location/'+ location.id);
@@ -78,7 +83,11 @@ module.exports = {
         if (!id) return res.send("No id specified.", 500);
         params['name'] = utility.toTitleCase(params['name']);
         
-        if(params['parentId'] == '') { params['parentId'] = null; }
+        if(params['parentId'] == '') { 
+            params['parentId'] = null; 
+         }  else {
+            params['parentId'] = Number(params['parentId']); 
+         }
         Location.update(id, params, function locationUpdated(err, updatedLocation) {
             if (err) {
                 console.log('err error: ' + err);
