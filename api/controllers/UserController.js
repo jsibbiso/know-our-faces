@@ -106,8 +106,11 @@ var UserController = {
             });
             
         });
-    }
+    },
     
+    index: function(req,res) {
+        return res.send("Restricted", 500);
+    }
 }
 
 module.exports = UserController;
