@@ -29,8 +29,7 @@ $( document ).ready(function() {
     }).validate({
         rules: {
             email : {
-                required: true,
-                regex: "\\w+@thoughtworks.com"
+                required: true
             }
         },
         submitHandler: function(form) {                        

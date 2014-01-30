@@ -11,8 +11,7 @@ module.exports = {
   attributes: {
   	email: {
       type: 'email', // Email type will get validated by the ORM
-      required: true,
-      contains: "thoughtworks"
+      required: true
     },
     name: {
       type: 'string'
